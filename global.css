@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .sfPro300-14 {
+    @apply font-SfPro300 text-[.875rem] text-gray1;
+  }
+
+  .sfPro400-14 {
+    @apply font-SfPro400 text-[.875rem] text-gray1;
+  }
+
+  .sfPro500-14 {
+    @apply font-SfPro500 text-[.875rem] text-gray1;
+  }
+
+  .sfPro600-14 {
+    @apply font-SfPro600 text-[.875rem] text-gray1;
+  }
+
+  .sfPro700-14 {
+    @apply font-SfPro700 text-[.875rem] text-gray1;
+  }
+
+  .sfPro900-14 {
+    @apply font-SfPro900 text-[.875rem] text-gray1;
+  }
+
+  .sfPro300-12 {
+    @apply font-SfPro300 text-[.75rem] text-gray1;
+  }
+
+  .sfPro400-12 {
+    @apply font-SfPro400 text-[.75rem] text-gray1;
+  }
+
+  .sfPro500-12 {
+    @apply font-SfPro500 text-[.75rem] text-gray1;
+  }
+
+  .sfPro600-12 {
+    @apply font-SfPro600 text-[.75rem] text-gray1;
+  }
+
+  .sfPro700-12 {
+    @apply font-SfPro700 text-[.75rem] text-gray1;
+  }
+
+  .sfPro900-12 {
+    @apply font-SfPro900 text-[.75rem] text-gray1;
+  }
+
+  .sfPro400-16 {
+    @apply font-SfPro400 text-[1rem] text-gray1;
+  }
+
+  .sfPro500-16 {
+    @apply font-SfPro500 text-[1rem] text-gray1;
+  }
+
+  .sfPro600-16 {
+    @apply font-SfPro600 text-[1rem] text-gray1;
+  }
+
+  .sfPro700-16 {
+    @apply font-SfPro700 text-[1rem] text-gray1;
+  }
+
+  .sfPro900-16 {
+    @apply font-SfPro900 text-[1rem] text-gray1;
+  }
+}

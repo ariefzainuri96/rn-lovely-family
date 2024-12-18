@@ -1,0 +1,67 @@
+{
+  "expo": {
+    "name": "rn-lovely-family",
+    "slug": "rn-lovely-family",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/umby-logo.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/splash-image.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#18469C"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "rn.simartumby.ios"
+    },
+    "androidStatusBar": {
+      "translucent": false
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "rn.lovelyfamily.android"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      "expo-font",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-image.png",
+          "iosScaleType": "centerCrop",
+          "resizeMode": "contain",
+          "backgroundColor": "#18469C",
+          "imageWidth": 200
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
+          "recordAudioAndroid": false
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "0b2171ce-1b36-4b45-9768-cd78556a1459"
+      }
+    }
+  }
+}
