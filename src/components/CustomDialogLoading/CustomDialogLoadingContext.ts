@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useCallback, useContext, useState } from 'react';
 
 type TCustomDialogLoadingContext = ReturnType<typeof useCustomDialogLoading>;
 
@@ -20,5 +20,15 @@ export function useCustomDialogLoading() {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState<string | undefined>();
 
-  return { open, setOpen, title, setTitle } as const;
+  const showLoading = useCallback((title?: string) => {
+    setOpen(true);
+    setTitle(title);
+  }, []);
+
+  const hideLoading = useCallback(() => {
+    setOpen(false);
+    setTitle(undefined);
+  }, []);
+
+  return { hideLoading, title, showLoading, open } as const;
 }

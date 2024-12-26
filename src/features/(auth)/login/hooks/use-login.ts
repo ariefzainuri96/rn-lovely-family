@@ -13,7 +13,7 @@ export default function useLogin() {
   const auth = useAuth();
   const axios = useAxios();
   const toast = useToast();
-  const { setOpen, setTitle } = useCustomDialogLoadingContext();
+  const { showLoading, hideLoading } = useCustomDialogLoadingContext();
   const [form, setForm] = useState<LoginForm>({
     email: '',
     password: '',
@@ -23,18 +23,20 @@ export default function useLogin() {
   const mutationLogin = useMutation({
     mutationKey: [],
     mutationFn: async (form: LoginForm) => {
-      setTitle('Loading...');
-      setOpen(true);
+      showLoading('Loading...');
       return (await axios.post<LoginResponse>('/users/login', form)).data;
     },
     onSuccess: (data) => {
-      setOpen(false);
+      hideLoading();
+
       auth?.signIn(data.data ?? '');
     },
     onError: (error) => {
-      setOpen(false);
+      hideLoading();
       toast.showToast(
-        error instanceof AxiosError ? error.response?.data.message : 'Failed to login!'
+        error instanceof AxiosError
+          ? (error.response?.data.message ?? 'Failed to login!')
+          : 'Failed to login!'
       );
     },
   });
