@@ -2,8 +2,6 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
-import { useColorScheme } from '@/hooks/theme/useColorScheme';
-import { AuthProvider } from '@/features/auth-context';
 import { useFonts } from 'expo-font';
 export {
   // Catch any errors thrown by the Layout component.
@@ -11,20 +9,21 @@ export {
 } from 'expo-router';
 import 'react-native-reanimated';
 import '@/global.css';
-import AppInit from '@/components/AppInit';
-import { delay } from '@/helper/utils';
 import { configureReanimatedLogger, ReanimatedLogLevel } from 'react-native-reanimated';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { AppStateStatus, Platform } from 'react-native';
-import { focusManager } from 'react-query';
-import useOnlineManager from '@/hooks/networking/use-online-manager';
-import useAppState from '@/hooks/networking/use-app-state';
+import { useColorScheme } from 'react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import AppInit from '@/src/components/AppInit';
+import { AuthProvider } from '@/src/features/auth-context';
+import { delay } from '@/src/helper/utils';
+import useAppState from '@/src/hooks/networking/use-app-state';
+import useOnlineManager from '@/src/hooks/networking/use-online-manager';
+import { CustomDialogLoadingProvider } from '@/src/components/CustomDialogLoading/CustomDialogLoadingProvider';
 
 export const unstable_settings = {
   // Ensure any route can link back to `/`
-  initialRouteName: '(auth)',
+  initialRouteName: '(auth)/login',
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -41,6 +40,7 @@ export default function RootLayout() {
 
   const [loaded, error] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    ChickenPie: require('../assets/fonts/Chicken-Pie.ttf'),
     SfPro100: require('../assets/fonts/SF-Pro-Text-Thin.otf'),
     SfPro200: require('../assets/fonts/SF-Pro-Text-Ultralight.otf'),
     SfPro300: require('../assets/fonts/SF-Pro-Text-Light.otf'),
@@ -83,11 +83,13 @@ export default function RootLayout() {
     <QueryClientProvider client={queryClient}>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <BottomSheetModalProvider>
-          <AuthProvider>
-            <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-              <Slot />
-            </ThemeProvider>
-          </AuthProvider>
+          <CustomDialogLoadingProvider>
+            <AuthProvider>
+              <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+                <Slot />
+              </ThemeProvider>
+            </AuthProvider>
+          </CustomDialogLoadingProvider>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
     </QueryClientProvider>

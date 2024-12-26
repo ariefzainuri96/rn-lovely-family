@@ -70,4 +70,16 @@
   .sfPro900-16 {
     @apply font-SfPro900 text-[1rem] text-gray1;
   }
+
+  .chickenPie-12 {
+    @apply font-ChickenPie text-[.75rem] text-gray1;
+  }
+
+  .chickenPie-14 {
+    @apply font-ChickenPie text-[.875rem] text-gray1;
+  }
+
+  .chickenPie-16 {
+    @apply font-ChickenPie text-[1rem] text-gray1;
+  }
 }

@@ -1,79 +1,89 @@
-import { Image, ScrollView, Text, View } from 'react-native';
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import Constants from 'expo-constants';
-import CustomInput from '@/components/CustomInput';
-import CustomButton from '@/components/CustomButton';
-import CustomCheckbox from '@/components/CustomCheckbox';
-import useLogin from '@/features/(auth)/login/hooks/use-login';
+import CustomInput from '@/src/components/CustomInput';
+import useLogin from '@/src/features/(auth)/login/hooks/use-login';
+import Column from '@/src/components/Column';
+import React from 'react';
+import CustomAppbar from '@/src/components/CustomAppbar';
+import Row from '@/src/components/Row';
+import { Link } from 'expo-router';
+import AnimatedToast from '@/src/components/CustomToast';
 
 const LoginPage = () => {
-  const { form, handleLogin, queryLogin, handleChange } = useLogin();
+  const { form, handleLogin, errors, mutationLogin, toast, handleChange } = useLogin();
 
   return (
-    <ScrollView keyboardShouldPersistTaps='always' className='h- screen w-screen bg-white'>
-      <View
-        style={{ paddingTop: Constants.statusBarHeight }}
-        className='flex flex-col items-center px-[1.5rem] pb-[1.5rem]'
+    <>
+      <AnimatedToast
+        message={toast.toastMessage}
+        visible={toast.toastVisible}
+        onDismiss={() => toast.hideToast()}
+      />
+      <CustomAppbar />
+      <ScrollView
+        contentContainerStyle={{ padding: 0 }}
+        keyboardShouldPersistTaps='always'
+        className='flex-1 bg-white'
       >
-        <Image
-          source={require('@/assets/images/umby-logo.png')}
-          style={{ width: 148, height: 144 }}
-        />
-        <Text className='mt-[1.5rem] font-SfPro600 text-[1.5rem] text-primary'>SIMART</Text>
-        <Text className='font-SfPro400 text-[.875rem] text-textPrimary'>
-          Sistem Informasi Aset Rumah Tangga
-        </Text>
-        <CustomInput
-          className='mt-[3rem]'
-          label='NIS'
-          value={form.nis}
-          onChange={(e) => handleChange('nis', e.nativeEvent.text)}
-          error={(form.errors ?? []).find((item) => item.path.includes('nis'))?.message}
-        />
-        <CustomInput
-          className='mt-[1.5rem]'
-          label='Password'
-          value={form.password}
-          onChange={(e) => handleChange('password', e.nativeEvent.text)}
-          secureTextEntry={true}
-          error={(form.errors ?? []).find((item) => item.path.includes('password'))?.message}
-        />
-        <CustomButton
-          disabled={queryLogin.isLoading}
-          onPress={() => handleLogin()}
-          className='mt-[2rem] w-full bg-primary'
-          label={'Login Local'}
-        />
-        <CustomButton
-          onPress={() => {
-            console.log('test2');
+        <Column
+          style={{
+            paddingTop: Constants.statusBarHeight,
           }}
-          className='mt-[1rem] w-full border-[1px] border-primary bg-transparent'
-          textColor='text-primary'
-          label={'Login SSO'}
-        />
-        <View className='mt-2 flex w-full flex-row items-center gap-4'>
-          <CustomCheckbox
-            handleOnPress={() => handleChange('isRememberMe', !form.isRememberMe)}
-            value={form.isRememberMe}
-            onValueChange={(value) => handleChange('isRememberMe', value)}
-            label='Ingatkan Saya'
+          className='items-center px-[1.5rem] pb-[1.5rem]'
+        >
+          <Image
+            source={require('@/assets/images/img_logo.png')}
+            style={{ width: 100, height: 100 }}
+            className='mt-8'
           />
-          <View className='flex flex-1 flex-row justify-end'>
-            <CustomButton
-              label={'Lupa Password?'}
-              className='bg-transparent'
-              textColor='text-blue4'
-            />
+          <Text className='chickenPie-16 mt-4 text-[3rem]'>Welcome Back!</Text>
+          <CustomInput
+            className='mt-[2.5rem]'
+            value={form.email}
+            placeholder='Email'
+            keyboardType='email-address'
+            returnKeyType='next'
+            onChange={(e) => handleChange('email', e.nativeEvent.text)}
+            error={(errors ?? []).find((item) => item.path.includes('email'))?.message}
+            editable={!mutationLogin.isPending}
+          />
+          <CustomInput
+            className='mt-3'
+            value={form.password}
+            placeholder='Password'
+            onChange={(e) => handleChange('password', e.nativeEvent.text)}
+            secureTextEntry={true}
+            error={(errors ?? []).find((item) => item.path.includes('password'))?.message}
+            onSubmitEditing={() => handleLogin()}
+            editable={!mutationLogin.isPending}
+          />
+          <View className='relative mt-8 w-full items-center justify-center'>
+            <View className='relative z-0 h-[1px] w-full bg-lineSeparator' />
+            <Text className='sfPro400-12 absolute z-10 self-center bg-white px-4'>Or</Text>
           </View>
-        </View>
-        <View className='mt-[1rem] w-full rounded-[4px] border-l-[4px] border-l-[#FF5D5D] bg-[#F665651A] px-[1.25rem] py-[.75rem]'>
-          <Text className='font-SfPro400 text-[0.625rem] text-textPrimary'>
-            Untuk alasan keamanan, silahkan logout dan tutup browser Anda setelah selesai
-            menggunakan layanan yang memerlukan otentikasi!{' '}
+
+          <Row className='mt-10 justify-center gap-6'>
+            <TouchableOpacity>
+              <View className='rounded-md border border-black p-3'>
+                <Image source={require('@/assets/images/img_facebook.png')} className='size-5' />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <View className='rounded-md border border-black p-3'>
+                <Image source={require('@/assets/images/img_google.png')} className='size-5' />
+              </View>
+            </TouchableOpacity>
+          </Row>
+
+          <Text className='sfPro400-14 mt-6 text-gray'>
+            Don't have an account?{' '}
+            <Link asChild href={'/(auth)/register'}>
+              <Text className='sfPro500-14 text-black'>Sign up</Text>
+            </Link>
           </Text>
-        </View>
-      </View>
-    </ScrollView>
+        </Column>
+      </ScrollView>
+    </>
   );
 };
 

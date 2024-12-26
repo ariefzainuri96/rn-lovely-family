@@ -22,7 +22,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/img_logo.png",
         "backgroundColor": "#ffffff"
       },
       "package": "rn.lovelyfamily.android"
@@ -30,7 +30,7 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/img_logo.png"
     },
     "plugins": [
       "expo-router",
