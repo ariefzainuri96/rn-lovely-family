@@ -10,7 +10,16 @@ import { Link } from 'expo-router';
 import AnimatedToast from '@/src/components/CustomToast';
 
 const LoginPage = () => {
-  const { form, handleLogin, errors, mutationLogin, toast, handleChange } = useLogin();
+  const {
+    form,
+    handleLogin,
+    showPassword,
+    setShowPassword,
+    errors,
+    mutationLogin,
+    toast,
+    handleChange,
+  } = useLogin();
 
   return (
     <>
@@ -51,11 +60,13 @@ const LoginPage = () => {
             className='mt-3'
             value={form.password}
             placeholder='Password'
+            textType='password'
             onChange={(e) => handleChange('password', e.nativeEvent.text)}
-            secureTextEntry={true}
+            secureTextEntry={showPassword}
             error={(errors ?? []).find((item) => item.path.includes('password'))?.message}
             onSubmitEditing={() => handleLogin()}
             editable={!mutationLogin.isPending}
+            onPasswordReveal={() => setShowPassword((prev) => !prev)}
           />
           <View className='relative mt-8 w-full items-center justify-center'>
             <View className='relative z-0 h-[1px] w-full bg-lineSeparator' />

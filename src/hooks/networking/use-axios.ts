@@ -81,7 +81,7 @@ export default function useAxios() {
 
   const axiosInstance = axios.create({
     baseURL: 'https://expressjs-lovely-family.vercel.app',
-    timeout: 10000,
+    timeout: 5000,
     headers: {
       'Content-Type': 'application/json',
       ...(auth ? { Authorization: `Bearer ${auth.token}` } : {}),

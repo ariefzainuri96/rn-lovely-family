@@ -13,6 +13,7 @@ export default function useLogin() {
   const auth = useAuth();
   const axios = useAxios();
   const toast = useToast();
+  const [showPassword, setShowPassword] = useState(false);
   const { showLoading, hideLoading } = useCustomDialogLoadingContext();
   const [form, setForm] = useState<LoginForm>({
     email: '',
@@ -71,6 +72,8 @@ export default function useLogin() {
   return {
     handleChange,
     handleLogin,
+    showPassword,
+    setShowPassword,
     form,
     mutationLogin,
     errors,
